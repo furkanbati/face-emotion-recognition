@@ -1,0 +1,32 @@
+# ====================================================================
+# Python Sanal Ortam ve Bağımlılık Filtreleri (GitHub'a Gitmeyecekler)
+# ====================================================================
+
+# Sanal ortam klasörleri (İnatçı venv uyarısını engelleyen kısım)
+venv/
+ENV/
+env/
+.venv/
+bin/
+include/
+lib/
+share/
+
+# Python derleme ve önbellek dosyaları
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.ipynb_checkpoints/
+
+# ====================================================================
+# Proje Özel Filtreleri (Veri Setleri ve Büyük Dosyalar)
+# ====================================================================
+
+# Büyük veri seti klasörü (Yüklemeyi kilitleyen kısım)
+data/
+
+# İşletim sistemi kalıntıları
+.DS_Store
+Thumbs.db
