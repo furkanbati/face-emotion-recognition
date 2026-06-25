@@ -19,7 +19,6 @@ The model successfully converged at **Epoch 36**, achieving a solid overall test
 
 ### 1. Classification Report
 
-```text
 --- Classification Report ---
               precision    recall  f1-score   support
 
