@@ -55,6 +55,8 @@ Bash
 pip install tensorflow opencv-python numpy matplotlib scikit-learn seaborn
 Ensure your dataset or the trained model is placed in the root directory:
 
+
+
 .
 ├── best_emotion_model.keras
 ├── detect.py
