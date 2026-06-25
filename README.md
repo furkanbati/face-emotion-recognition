@@ -31,8 +31,8 @@ The model successfully converged at **Epoch 36**, achieving a solid overall test
      Neutral       0.70      0.72      0.71       831
 
     accuracy                           0.59      7178
-   macro avg       0.56      0.53      0.53      7178
-weighted avg       0.59      0.59      0.58      7178
+     macro avg       0.56      0.53      0.53      7178
+    weighted avg       0.59      0.59      0.58      7178
 
 
 2. Key Insights from Metrics
@@ -47,15 +47,14 @@ Live Challenges (Fear & Disgust): Fear (F1-Score: 0.30) has a critical bottlenec
 Clone this repository:
 
 Bash
-git clone [https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git)
-cd YOUR_REPO_NAME
+git clone [https://github.com/furkanbati/face-emotion-recognition](https://github.com/furkanbati/face-emotion-recognition)
+cd face-emotion-recognition
 Install the required dependencies:
 
 Bash
 pip install tensorflow opencv-python numpy matplotlib scikit-learn seaborn
 Ensure your dataset or the trained model is placed in the root directory:
 
-Plaintext
 .
 ├── best_emotion_model.keras
 ├── detect.py
