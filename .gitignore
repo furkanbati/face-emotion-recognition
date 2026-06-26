@@ -26,7 +26,7 @@ __pycache__/
 
 # Büyük veri seti klasörü (Yüklemeyi kilitleyen kısım)
 data/
-
+test_resmi.png
 # İşletim sistemi kalıntıları
 .DS_Store
 Thumbs.db
