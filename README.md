@@ -1,76 +1,74 @@
-# Real-Time Facial Emotion Recognition (FER) using Custom CNN
+# 🚀 Face IQ - Real-Time Face Emotion Recognition API
 
-A real-time Facial Emotion Recognition system that detects human faces from a live webcam feed and predicts their emotional states instantaneously. The project utilizes a custom Deep Convolutional Neural Network (CNN) trained via TensorFlow/Keras and deployed using OpenCV.
-
----
-
-## 🚀 Features
-* **Real-Time Detection (`detect.py`):** Uses OpenCV's Haar Cascade classifier to isolate faces from a live webcam feed, pre-processes the cropped regions, and overlays emotion predictions dynamically onto the video stream.
-* **CPU-Optimized Architecture:** A lightweight yet deep CNN pipeline engineered specifically to achieve high frame rates during live inference on standard local hardware.
-* **Smart Training Pipeline:** Implements dynamic learning rate scheduling (`ReduceLROnPlateau`) and automated model saving (`ModelCheckpoint`) to capture peak validation performance.
+This project features a Convolutional Neural Network (CNN) model trained on the **CK+ dataset** for facial emotion recognition. It bridges the gap between AI development and production by wrapping the trained model in a high-performance **FastAPI** backend and containerizing the entire environment using **Docker** for seamless MLOps deployment.
 
 ---
 
-## 📊 Project Summary & Performance Analysis
+## 🏗️ Project Architecture & Pipeline
 
-The core system classifies $48 \times 48$ grayscale facial images into 7 emotional states: **Angry, Disgust, Fear, Happy, Sad, Surprise, and Neutral**. 
+The repository represents a complete machine learning lifecycle, split into two main phases:
 
-The model successfully converged at **Epoch 36**, achieving a solid overall test **Accuracy of 59%** across 7,178 evaluation images. For a lightweight architecture trained entirely on a CPU using a highly complex and noisy dataset, this represents a successful and robust baseline.
-
-### 1. Classification Report
-
---- Classification Report ---
-              precision    recall  f1-score   support
-
-       Angry       0.48      0.54      0.51       958
-     Disgust       0.48      0.28      0.35       111
-        Fear       0.50      0.21      0.30      1024
-       Happy       0.79      0.85      0.82      1774
-         Sad       0.49      0.65      0.56      1233
-    Surprise       0.47      0.44      0.46      1247
-     Neutral       0.70      0.72      0.71       831
-
-    accuracy                           0.59      7178
-     macro avg       0.56      0.53      0.53      7178
-    weighted avg       0.59      0.59      0.58      7178
+1. **Research & Development (R&D):** Data preprocessing, CNN architecture design, and model training performed inside Jupyter Notebook.
+2. **Production & MLOps:** Model serving via FastAPI and environment isolation using Docker to eliminate the "it works on my machine" problem.
 
 
-2. Key Insights from Metrics
 
-Live Strengths (Happy & Neutral): The system shows outstanding responsiveness in detect.py when encountering Happy (F1-Score: 0.82) and Neutral (F1-Score: 0.71) expressions. Distinct geometric facial cues like smile lines allowed the network to accurately catch 85% of happy faces.
+---
 
-The Intermediate Classes (Sad, Angry, Surprise): These classes show moderate performance. Sad (Recall: 0.65) is easily caught by the model, but it suffers from lower precision (0.49), implying it frequently misinterprets calm or expressionless faces as sad.
+## 📂 Project Structure
 
-Live Challenges (Fear & Disgust): Fear (F1-Score: 0.30) has a critical bottleneck with only 0.21 recall, frequently triggering brief false positives with Surprise during real-time state changes due to shared traits like widened eyes. Disgust (F1-Score: 0.35) underperformed due to severe class imbalance (only 111 test samples).
+```text
+face_iq/
+├── data/                         # CK+ Dataset directory
+├── FaceIQ_Training.ipynb         # Model training, analysis, and evaluation
+├── best_emotion_model.keras      # Trained CNN model weights
+├── detect.py                     # Local/Webcam real-time inference script
+├── main.py                       # Production FastAPI backend application
+├── Dockerfile                    # Docker build instructions
+├── requirements.txt              # Production python dependencies
+├── test_api.py                   # Automated integration/smoke test script
+└── README.md                     # Project documentation
+🛠️ Features
+Asynchronous API: Powered by FastAPI for lightning-fast image processing endpoints.
 
-🛠️ Installation & Setup
-Clone this repository:
+Robust Preprocessing: Automatically handles grayscale conversion, image resizing (48x48), and batch dimension expansion pipeline-safe inside the API.
 
-Bash
-git clone [https://github.com/furkanbati/face-emotion-recognition](https://github.com/furkanbati/face-emotion-recognition)
-cd face-emotion-recognition
-Install the required dependencies:
+Dockerized Environment: Isolated TensorFlow and Keras dependencies, ensuring 100% reproducibility across any OS or Cloud provider.
+
+Smoke Testing: Includes a pre-configured test_api.py script to instantly verify container health and prediction accuracy.
+
+🏃‍♂️ How to Run with Docker
+To build and run this microservice instantly without messing up your local Python environment, ensure you have Docker installed and run:
 
 Bash
-pip install tensorflow opencv-python numpy matplotlib scikit-learn seaborn
-Ensure your dataset or the trained model is placed in the root directory:
+# 1. Build the Docker image
+docker build -t face_iq_api .
 
+# 2. Spin up the container (Maps port 8000)
+docker run -d -p 8000:8000 --name face_iq_container face_iq_api
+Once running, you can access the interactive Swagger API documentation at:
+🔗 http://localhost:8000/docs
 
-
-Plaintext
-.
-├── best_emotion_model.keras
-├── detect.py
-└── README.md
-
-💻 How to Run (Real-Time Inference)
-To deploy the real-time webcam detector using the absolute best weights saved during training, execute the production script:
+🧪 Testing the API
+You can easily verify the model server's live predictions using the included automated integration script. Just make sure you have a sample.jpg in your directory and run:
 
 Bash
-python detect.py
-Note: Press 'q' on your keyboard while focusing on the camera window to safely close the application.
+python test_api.py
+📊 Sample API Output Response
+When successfully pinged, the API returns the predicted dominant emotion along with the confidence score and the full probability breakdown:
 
-🔮 Future Improvements
-Class Imbalance Mitigation: Apply oversampling or class weighting techniques during compilation to boost the recognition of underrepresented classes like Disgust and Fear.
-
-Architecture Scaling: Port the project to a GPU-accelerated environment to train deeper architectures like ResNet blocks with BatchNormalization.
+JSON
+{
+  "emotion": "Fear",
+  "confidence": 0.6642,
+  "all_predictions": {
+    "Angry": 0.0583,
+    "Disgust": 0.0010,
+    "Fear": 0.6642,
+    "Happy": 0.0187,
+    "Neutral": 0.0370,
+    "Sad": 0.1458,
+    "Surprise": 0.0746
+  }
+}
+💡 Developed by Furkan Batı as a comprehensive end-to-end MLOps showcase.
